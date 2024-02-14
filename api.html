@@ -43,24 +43,26 @@
       const newGifbtn = document.querySelector('#newGifbtn');
       const searchBtn = document.querySelector('#searchBtn');
 
+      // promise based code
+
       let currentSearchWord = 'cats';
       updateGif(currentSearchWord);
 
-      function updateGif() {
-        const url =
-          'https://api.giphy.com/v1/gifs/translate?api_key=x0G2nincWUTG9cDA1W02R72l6R6bDXZY&s=' +
-          currentSearchWord;
-        fetch(url, { mode: 'cors' })
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (response) {
-            img.src = response.data.images.original.url;
-          })
-          .catch((err) => {
-            alert('please enter a word you want to search for');
-          });
-      }
+      // function updateGif() {
+      //   const url =
+      //     'https://api.giphy.com/v1/gifs/translate?api_key=x0G2nincWUTG9cDA1W02R72l6R6bDXZY&s=' +
+      //     currentSearchWord;
+      //   fetch(url, { mode: 'cors' })
+      //     .then(function (response) {
+      //       return response.json();
+      //     })
+      //     .then(function (response) {
+      //       img.src = response.data.images.original.url;
+      //     })
+      //     .catch((err) => {
+      //       alert('please enter a word you want to search for');
+      //     });
+      // }
 
       searchBtn.addEventListener('click', () => {
         currentSearchWord = document.querySelector('#searchInput').value;
@@ -70,6 +72,20 @@
       newGifbtn.addEventListener('click', () => {
         updateGif();
       });
+
+      // async/await compatible code
+      async function updateGif() {
+        try {
+          const url =
+            'https://api.giphy.com/v1/gifs/translate?api_key=x0G2nincWUTG9cDA1W02R72l6R6bDXZY&s=' +
+            currentSearchWord;
+          const response = await fetch(url, { mode: 'cors' });
+          const dataGif = await response.json();
+          img.src = dataGif.data.images.original.url;
+        } catch (err) {
+          alert('please enter a word you want to search for');
+        }
+      }
     </script>
   </body>
 </html>
