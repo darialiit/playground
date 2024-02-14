@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      * {
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
+          sans-serif;
+      }
+      button {
+        font-size: 18px;
+        background-color: rgb(122, 226, 122);
+        padding: 6px 10px;
+        border: none;
+        border-radius: 5px;
+      }
+      #searchBtn {
+        background-color: rgb(158, 158, 231);
+      }
+
+      button:hover {
+        cursor: pointer;
+      }
+      .content {
+        display: flex;
+        justify-content: start;
+        gap: 20px;
+      }
+    </style>
+    <div class="content">
+      <img src="#" />
+      <button id="newGifbtn">New Gif</button>
+      <div class="search">
+        <input id="searchInput" type="text" />
+        <button type="button" id="searchBtn">search</button>
+      </div>
+    </div>
+    <script>
+      const img = document.querySelector('img');
+      const newGifbtn = document.querySelector('#newGifbtn');
+      const searchBtn = document.querySelector('#searchBtn');
+
+      let currentSearchWord = 'cats';
+      updateGif(currentSearchWord);
+
+      function updateGif() {
+        const url =
+          'https://api.giphy.com/v1/gifs/translate?api_key=x0G2nincWUTG9cDA1W02R72l6R6bDXZY&s=' +
+          currentSearchWord;
+        fetch(url, { mode: 'cors' })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (response) {
+            img.src = response.data.images.original.url;
+          })
+          .catch((err) => {
+            alert('please enter a word you want to search for');
+          });
+      }
+
+      searchBtn.addEventListener('click', () => {
+        currentSearchWord = document.querySelector('#searchInput').value;
+        updateGif();
+      });
+
+      newGifbtn.addEventListener('click', () => {
+        updateGif();
+      });
+    </script>
+  </body>
+</html>
