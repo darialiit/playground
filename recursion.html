@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recursion</title>
+  </head>
+  <body>
+    <script>
+      // The Fibonacci Sequence
+      function fibs(n) {
+        if (n === 0) {
+          return [0];
+        } else if (n === 1) {
+          return [0, 1];
+        } else {
+          const prev = fibs(n - 1);
+          const next = prev[prev.length - 1] + prev[prev.length - 2];
+          return [...prev, next];
+        }
+      }
+
+      //const result = fibs(8);
+      //console.log(result);
+
+      // Project: merge sort
+
+      function mergeSort(arr) {
+        let finalArr = [];
+
+        if (arr.length == 1) {
+          return arr;
+        } else {
+          let a = mergeSort(arr.slice(0, Math.floor(arr.length / 2)));
+          let b = mergeSort(arr.slice(Math.floor(arr.length / 2), arr.length));
+
+          let i = 0;
+          let j = 0;
+
+          for (let k = 0; k < a.length + b.length; k++) {
+            if (i < a.length && (j >= b.length || a[i] <= b[j])) {
+              finalArr.push(a[i]); // Append element from array a to finalArr
+              i++; // Move to the next element in array a
+            } else {
+              finalArr.push(b[j]); // Append element from array b to finalArr
+              j++; // Move to the next element in array b
+            }
+          }
+
+          return finalArr;
+        }
+      }
+
+      const test = [19, 10, 8, 1];
+      const testArr = [3, 2, 1, 13, 8, 5, 0, 1];
+      const testArrTwo = [105, 79, 100, 110];
+      const sorted = mergeSort(testArrTwo);
+      console.log(sorted);
+
+      //
+    </script>
+  </body>
+</html>
