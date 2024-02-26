@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Linked Lists</title>
+  </head>
+  <body>
+    <script>
+      class Node {
+        constructor() {
+          this.value = null;
+          this.nextNode = null;
+        }
+      }
+
+      class LinkedList {
+        constructor() {
+          this.head = null;
+        }
+
+        // adds a new node containing value to the end of the list
+        append(value) {
+          const current = new Node();
+          if (!this.head) {
+            current.value = value;
+            this.head = current;
+          } else {
+            let previous = this.head;
+            while (previous.nextNode) {
+              previous = previous.nextNode;
+            }
+            previous.nextNode = current;
+            current.value = value;
+          }
+        }
+        // adds a new node containing value to the start of the list
+        prepend(value) {
+          const current = new Node();
+          if (!this.head) {
+            current.value = value;
+            this.head = current;
+          } else {
+            const rest = this.head;
+            current.value = value;
+            current.nextNode = rest;
+            this.head = current;
+          }
+        }
+
+        // returns the total number of nodes in the list
+        size() {
+          let count = 1;
+          let aNode = this.head;
+          if (!this.head) {
+            return 0;
+          }
+          while (aNode.nextNode) {
+            count += 1;
+            aNode = aNode.nextNode;
+          }
+          return count;
+        }
+
+        // returns the first node in the list
+        returnHead() {
+          if (!this.head) {
+            return null;
+          } else {
+            return this.head;
+          }
+        }
+
+        // returns the last node in the list
+        tail() {
+          if (!this.head) {
+            return null;
+          } else {
+            let lastNode = this.head;
+            while (lastNode.nextNode) {
+              lastNode = lastNode.nextNode;
+            }
+            return lastNode;
+          }
+        }
+
+        // returns the node at the given index
+        at(index) {
+          let node = this.head;
+          for (let i = 0; i < index; i++) {
+            if (node.nextNode) {
+              node = node.nextNode;
+            } else {
+              return null;
+            }
+          }
+          return node;
+        }
+
+        // removes the last element from the list
+        pop() {
+          if (!this.head) {
+            return null;
+          } else {
+            const previousNode = this.at(this.size() - 2);
+            previousNode.nextNode = null;
+          }
+        }
+
+        // returns true if the passed in value is in the list and otherwise returns false.
+        contains(value) {
+          if (!this.head) {
+            return false;
+          } else {
+            let current = this.head;
+            while (current) {
+              if (current.value == value) {
+                return true;
+              }
+              current = current.nextNode;
+            }
+            return false;
+          }
+        }
+
+        // returns the index of the node containing value, or null if not found.
+        find(value) {
+          if (!this.head) {
+            return null;
+          } else {
+            let current = this.head;
+            let index = 0;
+            while (current) {
+              if (current.value == value) {
+                return index;
+              }
+              index += 1;
+              current = current.nextNode;
+            }
+            return null;
+          }
+        }
+
+        // represents LinkedList objects as strings, so you can print them out and preview them in the console.
+        // The format should be: ( value ) -> ( value ) -> ( value ) -> null
+        toString() {
+          if (!this.head) {
+            console.log('NULL');
+            return;
+          } else {
+            let list = '';
+            let current = this.head;
+            while (current) {
+              list += ` ${current.value} ->`;
+              current = current.nextNode;
+            }
+            list += ' null';
+            return list;
+          }
+        }
+
+        // that inserts a new node with the provided value at the given index.
+        insertAt(value, index) {
+          if (!this.head) {
+            return null;
+          } else {
+            if (index == 0) {
+              this.prepend(value);
+            } else if (index > this.size()) {
+              this.append(value);
+            } else {
+              const previousNode = this.at(index - 1);
+              const rest = previousNode.nextNode;
+              const newNode = new Node();
+              newNode.value = value;
+              newNode.nextNode = rest;
+              previousNode.nextNode = newNode;
+            }
+          }
+          return this;
+        }
+
+        // that removes the node at the given index.
+        removeAt(index) {
+          if (!this.head) {
+            return null;
+          } else if (index >= this.size() - 1) {
+            this.pop();
+          } else {
+            const nodeToRemove = this.at(index).nextNode;
+            const rest = nodeToRemove.nextNode;
+            const previous = this.at(index - 1);
+
+            previous.nextNode = rest;
+          }
+          return this;
+        }
+      }
+
+      const list = new LinkedList();
+    </script>
+  </body>
+</html>
