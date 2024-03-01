@@ -61,6 +61,104 @@
           prettyPrint(updatedTree);
         }
 
+        // delete function, written with help
+        delete(value) {
+          function deleteRec(root, value) {
+            if (root === null) {
+              return null;
+            }
+
+            // return the code to be deleted
+            if (root.data > value) {
+              root.left = deleteRec(root.left, value);
+              return root;
+            } else if (root.data < value) {
+              root.right = deleteRec(root.right, value);
+              return root;
+            }
+
+            // root = node to be deleted
+            // if one of the children == null
+            if (root.left === null) {
+              let temp = root.right;
+              root = null;
+              return temp;
+            } else if (root.right === null) {
+              let temp = root.left;
+              root = null;
+              return temp;
+            } else {
+              let parent = root;
+              let succ = root.right;
+
+              // find the successer
+              while (succ.left !== null) {
+                parent = succ;
+                succ = succ.left;
+              }
+
+              // move the rest of the nodes (after successor)
+              if (parent !== root) {
+                parent.left = succ.right;
+              } else {
+                parent.right = succ.right;
+              }
+
+              // assign a successor's value to the deleted (=root) element
+              root.data = succ.data;
+
+              succ = null;
+              return root;
+            }
+          }
+
+          const test = deleteRec(this.root, value);
+          prettyPrint(test);
+        }
+
+        // Write a find(value) function that returns the node with the given value.
+        find(value) {
+          let current = this.root;
+          while (current !== null) {
+            if (value == current.data) {
+              return current;
+            } else if (value > current.data) {
+              current = current.right;
+            } else if (value < current.data) {
+              current = current.left;
+            } else {
+              return null;
+            }
+          }
+        }
+
+        //levelOrder(callback)
+        levelOrder(callback) {
+          let current = this.root;
+          let queue = [current];
+          let finalArr = [];
+
+          while (queue.length !== 0) {
+            finalArr.push(current.data);
+            if (current.left !== null) {
+              queue.push(current.left);
+            }
+            if (current.right !== null) {
+              queue.push(current.right);
+            }
+            queue.shift();
+            current = queue[0];
+          }
+
+          if (callback == null) {
+            return finalArr;
+          } else {
+            finalArr.map((arr) => {
+              return callback(arr);
+            });
+          }
+        }
+
         //
       }
 
