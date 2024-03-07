@@ -112,8 +112,8 @@
             }
           }
 
-          const test = deleteRec(this.root, value);
-          prettyPrint(test);
+          const updated = deleteRec(this.root, value);
+          prettyPrint(updated);
         }
 
         // Write a find(value) function that returns the node with the given value.
@@ -160,6 +160,29 @@
         }
 
         // inOrder(callback), preOrder(callback), and postOrder(callback)
+        preOrder(callback) {
+          let current = this.root;
+          let finalArr = [];
+
+          function preOrderRec(currentRoot) {
+            if (currentRoot == null) {
+              return;
+            }
+            finalArr.push(currentRoot.data);
+            preOrderRec(currentRoot.left);
+            preOrderRec(currentRoot.right);
+          }
+
+          preOrderRec(current);
+
+          if (callback == null) {
+            return finalArr;
+          } else {
+            finalArr.map((arr) => {
+              return callback(arr);
+            });
+          }
+        }
 
         //
       }
