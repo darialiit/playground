@@ -253,6 +253,49 @@
           }
         }
 
+        height(value) {
+          if (value == null) {
+            return null;
+          }
+          let node = this.find(value);
+
+          function heightRec(current) {
+            if (current == null) {
+              return 0;
+            } else {
+              const left_height = heightRec(current.left);
+              const right_height = heightRec(current.right);
+
+              return Math.max(left_height, right_height) + 1;
+            }
+          }
+          const height = heightRec(node);
+
+          return height - 1;
+        }
+
+        isBalanced() {
+          const current = this.root;
+          let left_height = 0;
+          let right_height = 0;
+          if (current.left !== null) {
+            left_height = this.height(current.left.data);
+          }
+          if (current.right !== null) {
+            right_height = this.height(current.right.data);
+          }
+          const difference = Math.abs(left_height - right_height);
+          if (difference > 1) {
+            return false;
+          } else {
+            return true;
+          }
+        }
+        // rebalance() {
+        //   const current = this.root;
+
+        // }
+
         //
       }
 
