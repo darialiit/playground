@@ -291,12 +291,12 @@
             return true;
           }
         }
-        // rebalance() {
-        //   const current = this.root;
 
-        // }
-
-        //
+        rebalance() {
+          const current = this.root;
+          const arr = this.levelOrder();
+          this.buildTree(arr);
+        }
       }
 
       function prettyPrint(node, prefix = '', isLeft = true) {
@@ -326,7 +326,59 @@
         return uniqueArr;
       }
 
-      //
+      function createArr() {
+        const arr = [];
+        for (i = 0; i < 10; i++) {
+          const randomNumber = Math.floor(Math.random() * 101);
+          arr.push(randomNumber);
+        }
+        return arr;
+      }
+
+      //driver script
+      const newTree = new Tree();
+      console.log('Random array:');
+      const newArr = createArr();
+      console.log(newArr);
+      console.log('Build a tree from the random array:');
+      newTree.buildTree(newArr);
+      console.log('Is it balanced?');
+      console.log(newTree.isBalanced());
+
+      console.log('The tree in level order:');
+      console.log(newTree.levelOrder());
+      console.log('The tree in preorder:');
+      console.log(newTree.preOrder());
+      console.log('The tree inorder:');
+      console.log(newTree.inOrder());
+      console.log('The tree in postorder:');
+      console.log(newTree.postOrder());
+
+      console.log('Create another random array:');
+      const secondArr = [97, 98, 99, 100];
+      console.log(secondArr);
+      console.log('and insert each number to the first arr:');
+      secondArr.map((one) => {
+        newTree.insert(one);
+      });
+
+      console.log('Is it balanced?');
+      console.log(newTree.isBalanced());
+
+      console.log('Rebalance the tree:');
+      console.log(newTree.rebalance());
+
+      console.log('Check again, is it balanced?');
+      console.log(newTree.isBalanced());
+
+      console.log('The tree in level order:');
+      console.log(newTree.levelOrder());
+      console.log('The tree in preorder:');
+      console.log(newTree.preOrder());
+      console.log('The tree inorder:');
+      console.log(newTree.inOrder());
+      console.log('The tree in postorder:');
+      console.log(newTree.postOrder());
     </script>
   </body>
 </html>
