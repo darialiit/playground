@@ -184,6 +184,54 @@
           }
         }
 
+        postOrder(callback) {
+          let current = this.root;
+          let finalArr = [];
+
+          function postOrderRec(currentRoot) {
+            if (currentRoot == null) {
+              return;
+            }
+            postOrderRec(currentRoot.left);
+            postOrderRec(currentRoot.right);
+            finalArr.push(currentRoot.data);
+          }
+
+          postOrderRec(current);
+
+          if (callback == null) {
+            return finalArr;
+          } else {
+            finalArr.map((arr) => {
+              return callback(arr);
+            });
+          }
+        }
+
+        inOrder(callback) {
+          let current = this.root;
+          let finalArr = [];
+
+          function inOrderRec(currentRoot) {
+            if (currentRoot == null) {
+              return;
+            }
+            inOrderRec(currentRoot.left);
+            finalArr.push(currentRoot.data);
+            inOrderRec(currentRoot.right);
+          }
+
+          inOrderRec(current);
+
+          if (callback == null) {
+            return finalArr;
+          } else {
+            finalArr.map((arr) => {
+              return callback(arr);
+            });
+          }
+        }
+
         //
       }
 
